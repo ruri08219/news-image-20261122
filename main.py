@@ -95,13 +95,14 @@ STORIES = [
                "past Friday's deadline. Nearly 200 nations have until 03:00 GMT "
                "to object; approval opens 06:00 GMT Sunday."),
          src="REUTERS", tag="REPORTED", art="cop"),
-    dict(n=3, size="big", region="AFRICA", lat=9.1, lon=7.5,
-         kicker="DISASTER — NIGERIA",
-         title="24 dead as a funeral boat capsizes",
-         body=("A boat carrying mourners to a funeral capsizes on a Nigerian river, "
-               "killing 24. Rescue teams pull bodies from the water as families "
-               "wait on the bank."),
-         src="AFP", tag="REPORTED", art="boat"),
+    dict(n=3, size="big", region="OCEANIA", lat=-41.29, lon=174.78,
+         kicker="SPORT — CRICKET, WELLINGTON",
+         title="Pant's record century puts India on top",
+         body=("Rishabh Pant smashes 128 on day four in Wellington as India reach "
+               "629/6, a lead of 261 — India's highest Test total in New Zealand. "
+               "Pant is the first Indian wicketkeeper with Test centuries in all "
+               "four SENA countries."),
+         src="REUTERS · AP", tag="REPORTED", art="cricket"),
     # --- medium 11 ---
     dict(n=4, size="med", region="ASIA", lat=21.9, lon=96.0,
          title="France takes Myanmar to the UN Security Council",
@@ -132,8 +133,8 @@ STORIES = [
          desc="He claims the US removed Tehran's leadership twice.",
          src="REUTERS", tag="REPORTED", art="deal"),
     dict(n=11, size="med", region="MIDDLE EAST", lat=31.77, lon=35.21,
-         title="Israel: coalition talks open",
-         desc="Eisenkot invites Netanyahu's Likud to join talks.",
+         title="Israel: marathon coalition talks begin",
+         desc="Yashar and Likud open marathon talks on Sunday.",
          src="AP", tag="REPORTED", art="knesset"),
     dict(n=12, size="med", region="MIDDLE EAST", lat=33.89, lon=35.5, off=(14, -12),
          title="Lebanon: end occupation, Aoun demands",
@@ -148,18 +149,18 @@ STORIES = [
          desc="14 flights cancelled at Ranchi airport as the storm batters east.",
          src="PTI", tag="REPORTED", art="storm"),
     # --- also listed (one line each) ---
-    dict(n=15, size="list", region="ASIA", lat=25.6, lon=85.1, off=(14, -12),
-         text="Modi opens Nitish Setu bridge linking Patna and Vaishali, Bihar.",
-         src="PTI"),
+    dict(n=15, size="list", region="N. AMERICA", lat=36.17, lon=-115.14,
+         text="Las Vegas GP today — lights out 11:00 WIB.",
+         src="AP"),
     dict(n=16, size="list", region="ASIA", lat=28.6, lon=77.2,
          text="Japan to hold first live-fire drills on Indian soil.",
          src="REUTERS"),
     dict(n=17, size="list", region="OCEANIA", lat=-35.28, lon=149.13,
          text="Cummins keeps Australia Test captaincy, unanimous backing.",
          src="AAP"),
-    dict(n=18, size="list", region="OCEANIA", lat=-41.29, lon=174.78,
-         text="India face New Zealand in windy Wellington Test.",
-         src="PTI"),
+    dict(n=18, size="list", region="MIDDLE EAST", lat=33.89, lon=35.5, off=(-16, 12),
+         text="Lebanon marks 83rd Independence Day.",
+         src="AFP"),
     dict(n=19, size="list", region="EUROPE", lat=50.85, lon=4.35,
          text="Belgium faces air shutdown Monday in national strike.",
          src="AFP"),
@@ -214,16 +215,16 @@ STORIES = [
 ]
 
 LEFT_OUT = ("Peru 6.9 quake (20 Nov) · Sparta II Baltic strike (21 Nov) · "
-            "ICJ Myanmar genocide ruling (21 Nov) · Trump–Xi–Putin Shenzhen "
-            "summit (21 Nov) · Russian missiles in Poland (21 Nov) · S&P 500 "
+            "ICJ Myanmar genocide ruling (19 Nov) · Trump–Xi–Putin Shenzhen "
+            "summit (19 Nov) · Russian missiles in Poland (21 Nov) · S&P 500 "
             "correction (21 Nov) · Bolsonaro to ICU (21 Nov) · 'El Chapo "
             "Isidro' captured (21 Nov) · Estonia border closure announced "
-            "(20 Nov) · Voyager 1 one light-day (21 Nov)")
+            "(20 Nov) · Nigeria boat disaster (20 Nov)")
 
-NUMBERS = ("4 bases hit · 3 tankers struck · 24 dead · "
+NUMBERS = ("4 bases hit · 3 tankers struck · 128 Pant runs · "
            "15 militants killed · $30.8m lost · 14 flights axed")
-REGIONS = ("MIDDLE EAST 8 · ASIA 9 · EUROPE 7 · NORTH AMERICA 5 · "
-           "AFRICA 3 · OCEANIA 2 · SOUTH AMERICA 1")
+REGIONS = ("MIDDLE EAST 9 · ASIA 8 · EUROPE 7 · NORTH AMERICA 6 · "
+           "AFRICA 2 · OCEANIA 2 · SOUTH AMERICA 1")
 
 # ---------------------------------------------------------------- illustrations
 # Flat drawn scenes, one per featured story. Each draws inside box (x, y, w, h).
@@ -294,6 +295,27 @@ def art_boat(d, x, y, w, h):
         d.line([bx + 8 * _m.cos(_m.radians(a)), by + 8 * _m.sin(_m.radians(a)),
                 bx + 13 * _m.cos(_m.radians(a)), by + 13 * _m.sin(_m.radians(a))],
                fill=(220, 60, 40), width=4)
+
+
+def art_cricket(d, x, y, w, h):
+    _rr(d, [x, y, x + w, y + h], 8, (30, 110, 60))
+    # pitch + stumps
+    d.rectangle([x, y + h * 0.72, x + w, y + h], fill=(60, 140, 70))
+    for i, sx in enumerate((0.24, 0.30, 0.36)):
+        d.rectangle([x + w * sx, y + h * 0.52, x + w * sx + 4, y + h * 0.74],
+                    fill=(240, 200, 90))
+    d.rectangle([x + w * 0.24, y + h * 0.50, x + w * 0.375, y + h * 0.53], fill=(240, 200, 90))
+    # bat
+    d.polygon([(x + w * 0.58, y + h * 0.30), (x + w * 0.66, y + h * 0.26),
+               (x + w * 0.72, y + h * 0.62), (x + w * 0.64, y + h * 0.66)],
+              fill=(220, 180, 120))
+    d.rectangle([x + w * 0.60, y + h * 0.14, x + w * 0.64, y + h * 0.30], fill=(150, 100, 60))
+    # ball + motion arc
+    bx, by = x + w * 0.82, y + h * 0.24
+    d.ellipse([bx - 7, by - 7, bx + 7, by + 7], fill=(200, 40, 40))
+    d.arc([x + w * 0.60, y + h * 0.05, x + w * 0.98, y + h * 0.45], 300, 60,
+          fill=(255, 255, 255), width=2)
+    d.text((x + w * 0.06, y + h * 0.78), "128", font=font(13, True), fill=(255, 255, 255))
 
 
 def art_un(d, x, y, w, h):
@@ -433,6 +455,7 @@ def art_storm(d, x, y, w, h):
 
 
 ART = {"gulf": art_gulf, "cop": art_cop, "boat": art_boat, "un": art_un,
+       "cricket": art_cricket,
        "flags": art_flags, "spy": art_spy, "summit": art_summit,
        "atom": art_atom, "dove": art_dove, "deal": art_deal,
        "knesset": art_knesset, "cedar": art_cedar, "mount": art_mount,
@@ -651,7 +674,7 @@ def render():
     # ---- footer: date check ----
     d.rectangle([0, y0, W, H], fill=NAVY)
     f = font(11)
-    d.text((10, y0 + 6), "DATE CHECK — Every story on this page happened, or was first reported, on Sunday 22 November 2026.",
+    d.text((10, y0 + 6), "DATE CHECK — Every story on this page was reported on Sunday 22 November 2026.",
            font=font(11, True), fill=(255, 210, 60))
     lines = wrap(d, "LEFT OUT AS OTHER DAYS' NEWS: " + LEFT_OUT, font(10), W - 20)
     yy = y0 + 24
